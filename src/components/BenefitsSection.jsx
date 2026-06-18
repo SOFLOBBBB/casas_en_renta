@@ -8,7 +8,7 @@ const BENEFITS = [
     color: "olive",
   },
   {
-    icon: "drop",
+    icon: "wifi",
     title: "Servicios incluidos",
     text: "Agua, luz, gas e internet incluidos en tu renta.",
     color: "slate-blue",

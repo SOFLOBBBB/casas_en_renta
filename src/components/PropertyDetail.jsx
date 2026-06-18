@@ -222,7 +222,7 @@ export default function PropertyDetail({ property, onClose }) {
               items={property.commonAreas}
             />
             <DetailBox
-              icon="drop"
+              icon="wifi"
               color="slate-blue"
               title="Servicios incluidos"
               items={property.services}
@@ -295,21 +295,26 @@ export default function PropertyDetail({ property, onClose }) {
             <h4 className="font-display text-lg font-bold text-slate-blue-900 mb-3">
               Servicios cercanos
             </h4>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
               <MapButton
-                icon="shield"
-                label="Hospitales"
-                href={nearbySearchUrl("hospitales", property.mapsQuery)}
+                icon="coffee"
+                label="Cafeterías"
+                href={nearbySearchUrl("cafeterías", property.mapsQuery)}
               />
               <MapButton
-                icon="drop"
+                icon="cart"
+                label="Supermercados"
+                href={nearbySearchUrl("supermercados", property.mapsQuery)}
+              />
+              <MapButton
+                icon="pill"
                 label="Farmacias"
                 href={nearbySearchUrl("farmacias", property.mapsQuery)}
               />
               <MapButton
-                icon="utensils"
-                label="Supermercados"
-                href={nearbySearchUrl("supermercados", property.mapsQuery)}
+                icon="shield"
+                label="Hospitales"
+                href={nearbySearchUrl("hospitales", property.mapsQuery)}
               />
               <MapButton
                 icon="bus"
@@ -323,6 +328,59 @@ export default function PropertyDetail({ property, onClose }) {
             <p className="mt-2 text-xs text-slate-blue-500 italic">
               Cada botón abre Google Maps con resultados cercanos a la
               dirección de la casa.
+            </p>
+          </div>
+
+          {/* Centros universitarios cercanos */}
+          <div>
+            <h4 className="font-display text-lg font-bold text-slate-blue-900 mb-3 flex items-center gap-2">
+              <Icon
+                name="graduation"
+                className="w-5 h-5 text-olive-700"
+              />
+              Centros universitarios cercanos
+            </h4>
+
+            {property.nearbyUniversities &&
+              property.nearbyUniversities.length > 0 && (
+                <ul className="mb-3 space-y-1.5">
+                  {property.nearbyUniversities.map((u) => (
+                    <li
+                      key={u.short || u.name}
+                      className="flex items-start gap-2 text-sm text-slate-blue-800"
+                    >
+                      <Icon
+                        name="check"
+                        className="w-4 h-4 text-olive-600 mt-0.5 shrink-0"
+                        strokeWidth={2.4}
+                      />
+                      <span>{u.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {property.nearbyUniversities?.map((u) => (
+                <MapButton
+                  key={`route-${u.short || u.name}`}
+                  icon="graduation"
+                  label={`Ruta a ${u.short || u.name}`}
+                  href={mapsDirectionsUrl(
+                    `${u.name} desde ${property.mapsQuery}`,
+                    "driving"
+                  )}
+                />
+              ))}
+              <MapButton
+                icon="pin"
+                label="Buscar universidades cercanas"
+                href={nearbySearchUrl("universidades", property.mapsQuery)}
+              />
+            </div>
+            <p className="mt-2 text-xs text-slate-blue-500 italic">
+              Consulta la ruta más rápida en Google Maps según tu punto de
+              salida.
             </p>
           </div>
         </div>

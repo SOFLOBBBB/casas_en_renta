@@ -140,6 +140,27 @@ const PATHS = {
       <path d="m12 5 7 7-7 7" />
     </>
   ),
+  coffee: (
+    <>
+      <path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8z" />
+      <path d="M17 10h2a2.5 2.5 0 0 1 0 5h-2" />
+      <path d="M7 2c0 1.5-1 1.5-1 3s1 1.5 1 3" />
+      <path d="M11 2c0 1.5-1 1.5-1 3s1 1.5 1 3" />
+    </>
+  ),
+  cart: (
+    <>
+      <circle cx="9" cy="20" r="1.4" />
+      <circle cx="17" cy="20" r="1.4" />
+      <path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.4a2 2 0 0 0 2-1.5L20.5 8H6" />
+    </>
+  ),
+  pill: (
+    <>
+      <rect x="3" y="9" width="18" height="6" rx="3" />
+      <path d="M12 9v6" />
+    </>
+  ),
 };
 
 export default function Icon({ name, className = "w-5 h-5", strokeWidth = 1.8 }) {

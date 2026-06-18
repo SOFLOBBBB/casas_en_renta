@@ -1,7 +1,11 @@
 import Icon from "./Icon";
 import { properties } from "../data/properties";
 import { NEARBY_PLACES } from "../data/site";
-import { mapsSearchUrl, mapsDirectionsUrl } from "../utils/links";
+import {
+  mapsSearchUrl,
+  mapsDirectionsUrl,
+  nearbySearchUrl,
+} from "../utils/links";
 
 export default function LocationSection() {
   return (
@@ -71,52 +75,111 @@ export default function LocationSection() {
           </h3>
           <div className="grid lg:grid-cols-3 gap-5">
             {properties.map((p) => (
-              <div
-                key={p.id}
-                className="p-5 sm:p-6 rounded-2xl bg-white border border-cream-200 shadow-sm flex flex-col"
-              >
-                <p className="text-[11px] font-semibold text-olive-700 uppercase tracking-wider">
-                  {p.zone}
-                </p>
-                <h4 className="font-display text-lg font-bold text-slate-blue-900 mt-1">
-                  {p.name}
-                </h4>
-                <p className="text-sm text-slate-blue-600 mt-1 flex items-start gap-1.5">
-                  <Icon
-                    name="pin"
-                    className="w-4 h-4 text-terra-500 mt-0.5 shrink-0"
-                  />
-                  {p.shortAddress}
-                </p>
-
-                <div className="mt-5 grid grid-cols-2 gap-2">
-                  <RouteBtn
-                    icon="pin"
-                    label="Ver ubicación"
-                    href={mapsSearchUrl(p.mapsQuery)}
-                  />
-                  <RouteBtn
-                    icon="bus"
-                    label="Transporte"
-                    href={mapsDirectionsUrl(p.mapsQuery, "transit")}
-                  />
-                  <RouteBtn
-                    icon="bike"
-                    label="Bicicleta"
-                    href={mapsDirectionsUrl(p.mapsQuery, "bicycling")}
-                  />
-                  <RouteBtn
-                    icon="walk"
-                    label="Caminando"
-                    href={mapsDirectionsUrl(p.mapsQuery, "walking")}
-                  />
-                </div>
-              </div>
+              <PropertyRouteCard key={p.id} property={p} />
             ))}
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function PropertyRouteCard({ property: p }) {
+  const universities = p.nearbyUniversities || [];
+  const hasFeaturedUni = universities.length > 0;
+
+  return (
+    <div className="p-5 sm:p-6 rounded-2xl bg-white border border-cream-200 shadow-sm flex flex-col">
+      <p className="text-[11px] font-semibold text-olive-700 uppercase tracking-wider">
+        {p.zone}
+      </p>
+      <h4 className="font-display text-lg font-bold text-slate-blue-900 mt-1">
+        {p.name}
+      </h4>
+      <p className="text-sm text-slate-blue-600 mt-1 flex items-start gap-1.5">
+        <Icon
+          name="pin"
+          className="w-4 h-4 text-terra-500 mt-0.5 shrink-0"
+        />
+        {p.shortAddress}
+      </p>
+
+      <div className="mt-5 grid grid-cols-2 gap-2">
+        <RouteBtn
+          icon="pin"
+          label="Ver ubicación"
+          href={mapsSearchUrl(p.mapsQuery)}
+        />
+        <RouteBtn
+          icon="bus"
+          label="Transporte"
+          href={mapsDirectionsUrl(p.mapsQuery, "transit")}
+        />
+        <RouteBtn
+          icon="bike"
+          label="Bicicleta"
+          href={mapsDirectionsUrl(p.mapsQuery, "bicycling")}
+        />
+        <RouteBtn
+          icon="walk"
+          label="Caminando"
+          href={mapsDirectionsUrl(p.mapsQuery, "walking")}
+        />
+      </div>
+
+      {/* Centros universitarios cercanos */}
+      <div className="mt-6 pt-5 border-t border-cream-200">
+        <div className="flex items-center gap-2 mb-3">
+          <span className="w-8 h-8 grid place-items-center rounded-lg bg-olive-100 text-olive-700">
+            <Icon name="graduation" className="w-4 h-4" />
+          </span>
+          <h5 className="font-display font-bold text-slate-blue-900 text-sm">
+            Centros universitarios cercanos
+          </h5>
+        </div>
+
+        {hasFeaturedUni && (
+          <ul className="space-y-2 mb-3">
+            {universities.map((u) => (
+              <li
+                key={u.short || u.name}
+                className="flex items-start gap-2 text-sm text-slate-blue-700"
+              >
+                <Icon
+                  name="check"
+                  className="w-4 h-4 text-olive-600 mt-0.5 shrink-0"
+                  strokeWidth={2.4}
+                />
+                <span>{u.name}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {universities.map((u) => (
+            <RouteBtn
+              key={`route-${u.short || u.name}`}
+              icon="graduation"
+              label={`Ruta a ${u.short || u.name}`}
+              href={mapsDirectionsUrl(
+                `${u.name} desde ${p.mapsQuery}`,
+                "driving"
+              )}
+            />
+          ))}
+          <RouteBtn
+            icon="pin"
+            label="Buscar universidades cercanas"
+            href={nearbySearchUrl("universidades", p.mapsQuery)}
+          />
+        </div>
+
+        <p className="mt-2 text-[11px] text-slate-blue-500 italic">
+          Consulta la ruta más rápida en Google Maps según tu punto de salida.
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -126,10 +189,10 @@ function RouteBtn({ icon, label, href }) {
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full bg-cream-100 hover:bg-olive-100 text-slate-blue-800 hover:text-olive-800 font-semibold text-xs border border-cream-200 transition"
+      className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full bg-cream-100 hover:bg-olive-100 text-slate-blue-800 hover:text-olive-800 font-semibold text-xs border border-cream-200 transition text-center"
     >
-      <Icon name={icon} className="w-4 h-4" />
-      {label}
+      <Icon name={icon} className="w-4 h-4 shrink-0" />
+      <span className="truncate">{label}</span>
     </a>
   );
 }

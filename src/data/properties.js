@@ -67,6 +67,7 @@ export const properties = [
     commonAreas: DEFAULT_COMMON_AREAS,
     rules: DEFAULT_RULES,
     requirements: DEFAULT_REQUIREMENTS,
+    nearbyUniversities: [],
     images: [
       "/images/ignacio_ramirez/foto-04.jpg",
       "/images/ignacio_ramirez/foto-06.jpg",
@@ -110,6 +111,7 @@ export const properties = [
     commonAreas: DEFAULT_COMMON_AREAS,
     rules: DEFAULT_RULES,
     requirements: DEFAULT_REQUIREMENTS,
+    nearbyUniversities: [],
     images: [
       "/images/mediero/foto-01.jpg",
       "/images/mediero/foto-09.jpg",
@@ -127,29 +129,35 @@ export const properties = [
   },
   {
     id: "alcalde_barranquitas",
-    name: "Casa Alcalde Barranquitas",
+    name: "Casa Gonzalo Curiel / Alcalde Barranquitas",
     zone: "Alcalde Barranquitas, Guadalajara",
     address:
-      "Colonia Alcalde Barranquitas, Guadalajara, Jal. (cerca del Macrobús y Línea 3 del Tren Ligero)",
-    shortAddress: "Col. Alcalde Barranquitas",
+      "C. Gonzalo Curiel 357, Alcalde Barranquitas, 44270 Guadalajara, Jal.",
+    shortAddress: "C. Gonzalo Curiel 357, Alcalde Barranquitas",
     city: "Guadalajara",
     defaultAvailableRooms: 1,
     price: PRICE,
     deposit: "Depósito requerido",
     description:
-      "Ubicación práctica para estudiantes que necesitan moverte en transporte público, cerca de estaciones importantes.",
+      "Ubicación muy práctica para estudiantes, especialmente cerca del Centro Universitario de Ciencias de la Salud (CUCS) y con buen acceso a transporte público.",
     longDescription:
-      "Ideal si dependes del transporte público. Estás a pocos minutos del Macrobús y de la Línea 3 del Tren Ligero, así que puedes conectarte con casi cualquier punto de la ciudad sin complicaciones.",
+      "Ubicada en Alcalde Barranquitas, una zona muy práctica para estudiantes, especialmente por su cercanía al Centro Universitario de Ciencias de la Salud, CUCS, además de tener acceso a transporte público como Macrobús y Línea 3 del Tren Ligero.",
     highlights: [
-      "Cerca del Macrobús",
-      "Acceso rápido a Línea 3 del Tren Ligero",
-      "Excelente conectividad con universidades",
+      "Muy cerca del CUCS (Ciencias de la Salud)",
+      "Acceso a Macrobús y Línea 3 del Tren Ligero",
+      "Zona práctica para vida estudiantil diaria",
     ],
     services: DEFAULT_SERVICES,
     roomIncludes: DEFAULT_ROOM_INCLUDES,
     commonAreas: DEFAULT_COMMON_AREAS,
     rules: DEFAULT_RULES,
     requirements: DEFAULT_REQUIREMENTS,
+    nearbyUniversities: [
+      {
+        name: "Centro Universitario de Ciencias de la Salud, CUCS",
+        short: "CUCS",
+      },
+    ],
     images: [
       "/images/alcalde_barranquitas/foto-04.jpg",
       "/images/alcalde_barranquitas/foto-02.jpg",
@@ -165,7 +173,8 @@ export const properties = [
       "/images/alcalde_barranquitas/foto-12.jpg",
       "/images/alcalde_barranquitas/foto-13.jpg",
     ],
-    mapsQuery: "Alcalde Barranquitas, Guadalajara, Jal.",
+    mapsQuery:
+      "C. Gonzalo Curiel 357, Alcalde Barranquitas, 44270 Guadalajara, Jal.",
     placeholderStyle: "placeholder-living",
   },
 ];
